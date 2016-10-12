@@ -40,7 +40,7 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
     
    
     init(titles: [String], type: navBarType) {
-        super.init(frame: CGRectMake(0, 60, CGRectGetWidth(UIScreen.mainScreen().bounds), 54))
+        super.init(frame: CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen().bounds), 44))
         self.navBarColorType = type
         self.titles = titles
         
@@ -97,7 +97,7 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
         collection.contentSize = CGSizeMake(UIScreen.mainScreen().bounds.width, 30) //????
         
         
-        collection.contentInset = UIEdgeInsetsMake(-60, 0, 0, 0)
+        collection.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         collection.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collection.alwaysBounceHorizontal = true
         collection.showsHorizontalScrollIndicator = false

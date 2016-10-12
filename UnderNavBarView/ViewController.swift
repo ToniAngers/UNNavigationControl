@@ -21,6 +21,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
        self.view.backgroundColor = UIColor.whiteColor()
         
+        self.title = "Navigation SubView"
+        
         
         let underView = UnderNavBarView(titles: ["Challenges", "Ranking", "Something", "Challenges", "Challenges"], type: .navBarTypeGreen
         )
@@ -44,19 +46,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.view.bringSubviewToFront(self.triangleView!)
-
         tableViewCreation()
+        self.view.bringSubviewToFront(self.underView!)
+
     }
     
     func tableViewCreation()  {
         
-        let tableView = UITableView(frame: CGRectMake(0, 110, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)), style: .Grouped)
+        let tableView = UITableView(frame: CGRectMake(0, 37, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)), style: .Grouped)
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.clearColor()
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0)
         self.view.addSubview(tableView)
         
     }

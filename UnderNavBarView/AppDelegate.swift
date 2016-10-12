@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //        nav.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         //        nav.navigationBar.shadowImage = UIImage()
         nav.navigationBar.barStyle = .BlackTranslucent
-//        nav.navigationBar.translucent = false
+        nav.navigationBar.translucent = false
         let overlayView = UIView(frame: CGRectMake(0, 44, 375, 1))
         overlayView.backgroundColor = UIColor(red: 0/255, green: 183/255, blue: 30/255, alpha: 1.0) /* #00b71e */
         nav.navigationBar.addSubview(overlayView)
