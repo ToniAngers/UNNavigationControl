@@ -9,7 +9,7 @@
 import UIKit
 
 protocol UnderNavBarViewDelegate: class {
-    func showNewContent(sender: UnderNavBarView, index: NSIndexPath)
+    func itemOnSubNavigationBarSelected(sender: UnderNavBarView, index: NSIndexPath)
 }
 
 
@@ -56,7 +56,7 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
         fatalError("init(coder:) has not been implemented")
     }
 
-    //TODO: text width calculation
+    //TODO: text width, padding whent 3 elements
     
     func collectionViewCreation(selectedItem itemIndexPath: NSIndexPath?, navType:navBarType)  {
         
@@ -200,7 +200,7 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
                 
         }
         
-        self.delegate?.showNewContent(self, index: indexPath)
+        self.delegate?.itemOnSubNavigationBarSelected(self, index: indexPath)
 
     }
     
