@@ -10,10 +10,18 @@ import UIKit
 
 class Controller2: UIViewController {
 
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.orangeColor()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

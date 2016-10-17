@@ -72,8 +72,10 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
         
         if self.titles != nil {
             padding = size / CGFloat(self.titles!.count+1)
-            if padding < 15 {
-                padding = 15
+            self.padding = padding
+            if self.padding < 50 {
+                padding = 50
+                self.padding = padding
             }
         }
 

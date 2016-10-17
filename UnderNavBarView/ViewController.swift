@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UnderNavBarViewDelegate, UIScrollViewDelegate {
     
      var items:[String] = Array()
+     var titles:[String] = Array()
+
      var underView:UIView?=nil
      var tableView:UITableView? = nil
      var triangleView:UIView? = nil
@@ -24,7 +26,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.lightGrayColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         self.title = "Navigation SubView"
         
         self.scrollView = UIScrollView(frame: self.view.bounds)
@@ -32,7 +34,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.scrollView.delegate = self
         self.view.addSubview(self.scrollView)
         
-        let underView = UnderNavBarView(titles: ["Challenges", "Ranking", "Something"], type: .navBarTypeGreen)
+        self.titles = ["Challenges", "Ranking", "Something", "Challenges", "Ranking", "Something"]
+        
+        let underView = UnderNavBarView(titles:self.titles, type: .navBarTypeGreen)
         underView.delegate = self
         self.triangleView = underView.triangleView!
         self.underView = underView
@@ -61,7 +65,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.controllersStack = [V1, V2, V3]
         
-        self.scrollView.contentSize = CGSizeMake(V1.view.frame.width * CGFloat(self.items.count), V1.view.frame.height)
+        self.scrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(self.titles.count), V1.view.frame.height)
         
     }
     
@@ -115,6 +119,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
+        print(scrollView.contentOffset)
+        
         
         
     }
@@ -134,8 +140,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func showControllerAtIndex(selectedIndex: Int)  {
         
-        let selectV = self.controllersStack[selectedIndex]
-        self.scrollView.scrollRectToVisible(selectV.view.frame, animated: true)
+        let selectedVC = self.controllersStack[selectedIndex]
+        self.scrollView.scrollRectToVisible(selectedVC.view.frame, animated: true)
         
     }
     

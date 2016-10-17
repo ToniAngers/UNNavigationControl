@@ -9,11 +9,13 @@
 import UIKit
 
 class Controller1: UIViewController {
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-     self.view.backgroundColor = UIColor.lightGrayColor()
+     self.view.backgroundColor = UIColor.whiteColor()
     
     }
 
