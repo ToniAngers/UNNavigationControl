@@ -13,16 +13,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
      var items:[String] = Array()
      var titles:[String] = Array()
 
-     var underView:UIView?=nil
+     var underView: UnderNavBarView!
      var tableView:UITableView? = nil
      var triangleView:UIView? = nil
      var scrollView: UIScrollView!
-    
      var controllersStack : [UIViewController]!
     
     
+     var indexOfCurrentVC: Int = 0
     
 //MARK: LyfeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,9 +35,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.scrollView.delegate = self
         self.view.addSubview(self.scrollView)
         
-        self.titles = ["Challenges", "Ranking", "Something", "Challenges", "Ranking", "Something"]
+        self.titles = ["Challenges", "Ranking", "Something"]
         
         let underView = UnderNavBarView(titles:self.titles, type: .navBarTypeGreen)
+        
         underView.delegate = self
         self.triangleView = underView.triangleView!
         self.underView = underView
@@ -67,6 +69,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.scrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(self.titles.count), V1.view.frame.height)
         
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -76,9 +80,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.view.bringSubviewToFront(self.underView!)
         
     }
-
-    
-    
   
  //MARK: UITableViewDelegate
     
@@ -118,12 +119,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  //MARK: UIScrollViewDelegate
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+       
+        if self.underView.tapped == false { //check if cell in collection tapped - moveTriangleTo() doesnt call.
+            
+            if scrollView.contentOffset.x > 0 {
+                let index = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+                self.indexOfCurrentVC = index
+                
+                let indexPath = NSIndexPath(forItem: indexOfCurrentVC , inSection: 0)
+                self.underView.moveTrinagleTo(indexPath)
+            }
+        }
         print(scrollView.contentOffset)
         
-        
-        
     }
+    
+    
+    
+    
+    
     
  //MARK: Help functions
     
@@ -142,6 +156,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let selectedVC = self.controllersStack[selectedIndex]
         self.scrollView.scrollRectToVisible(selectedVC.view.frame, animated: true)
+        
         
     }
     

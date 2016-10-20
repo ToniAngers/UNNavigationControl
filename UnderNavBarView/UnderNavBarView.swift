@@ -38,7 +38,11 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
     var wholeTextWidth: CGFloat = 0
     var padding: CGFloat = 0
     
-   
+    var myCollecion: UICollectionView? = nil
+    
+    var tapped: Bool  = false
+    
+    
     init(titles: [String], type: navBarType) {
         super.init(frame: CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen().bounds), 44))
         self.navBarColorType = type
@@ -67,14 +71,14 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
         }
 
         let size = UIScreen.mainScreen().bounds.width - self.wholeTextWidth
-        var padding : CGFloat = 30
+        var padding : CGFloat = 40
         self.padding = padding
         
         if self.titles != nil {
             padding = size / CGFloat(self.titles!.count+1)
             self.padding = padding
-            if self.padding < 50 {
-                padding = 50
+            if self.padding < 40 {
+                padding = 40
                 self.padding = padding
             }
         }
@@ -88,6 +92,7 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
         let collection = UICollectionView(frame: frame, collectionViewLayout: layout)
         collection.delegate = self
         collection.dataSource = self
+        self.myCollecion = collection
         
         if navType == navBarType.navBarTypeGreen {
             collection.backgroundColor = UIColor(red: 0/255, green: 183/255, blue: 30/255, alpha: 1.0) /* #00b71e */
@@ -171,9 +176,8 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
 //        lableProp = UILabel()
 //        lableProp?.text = text
         
-        let size = giveMeSizeOfText(self.titles![(indexPath.row)], font: UIFont(name: "Helvetica", size: 13))
+    let size = giveMeSizeOfText(self.titles![(indexPath.row)], font: UIFont(name: "Helvetica", size: 13))
 
-        
     return  size //(lableProp?.intrinsicContentSize())!
     }
     
@@ -185,30 +189,27 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+        self.tapped = true 
+        
         let currentCollectionViewcell =  collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
         let currentCollectionViewCellCenter = currentCollectionViewcell.center
         print("itemCenter = \(currentCollectionViewCellCenter)")
         
-        
         let pointOnSelf = self.convertPoint(currentCollectionViewCellCenter, fromView: currentCollectionViewcell)
         print("pointOnSelf = \(pointOnSelf)")
 
-        
         UIView.animateWithDuration(0.3, animations: { 
             
             self.triangleView?.center = CGPointMake(currentCollectionViewCellCenter.x - self.lastContentOffset, (self.triangleView?.center.y)!)
 
             }) { (true) in
                 
+                self.tapped = false
         }
-        
         self.delegate?.itemOnSubNavigationBarSelected(self, index: indexPath)
-
     }
     
-    
     //MARK: UIScrollViewDelegate
-    
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         var scrollDirection: ScrollDirection
@@ -227,9 +228,7 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
         }
         
         self.lastContentOffset = scrollView.contentOffset.x;
-        
     }
-    
     
     func giveMeSizeOfText(string: String, font: UIFont!) -> CGSize {
         
@@ -241,10 +240,24 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
             let fontAttributes = [NSFontAttributeName: font]
             sizeOfString = (text as NSString).sizeWithAttributes(fontAttributes)
         }
-        
         return sizeOfString
     }
     
     
+    func moveTrinagleTo(index: NSIndexPath) {
+        
+        print("center = \(self.triangleView?.center)")
+        let currentCollectionViewcell =  self.myCollecion!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: index)
+        let currentCollectionViewCellCenter = currentCollectionViewcell.center
+        
+      
+        UIView.animateWithDuration(0.3, delay: 0, options: .BeginFromCurrentState, animations: {
+            self.triangleView?.center = CGPointMake(currentCollectionViewCellCenter.x, (self.triangleView?.center.y)!)
+            print("center = \(self.triangleView?.center)")
+            
+        }) { (true) in
+            
+        }
+    }
     
 }
