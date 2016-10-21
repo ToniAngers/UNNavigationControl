@@ -14,9 +14,9 @@ protocol UnderNavBarViewDelegate: class {
 
 
 class UnderNavBarView: UIView, UICollectionViewDelegate,
-                       UICollectionViewDataSource,
-                       UICollectionViewDelegateFlowLayout,
-                       UIScrollViewDelegate   {
+    UICollectionViewDataSource,
+    UICollectionViewDelegateFlowLayout,
+UIScrollViewDelegate   {
     
     enum navBarType {
         case navBarTypeGreen
@@ -29,7 +29,6 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
     }
     
     weak var delegate:UnderNavBarViewDelegate? //collectionView Item pressed
-    
     var titles:[String]?
     var triangleView: TriangleView? = nil
     var navBarColorType:navBarType? = nil
@@ -37,11 +36,9 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
     var lastContentOffset: CGFloat = 0
     var wholeTextWidth: CGFloat = 0
     var padding: CGFloat = 0
-    
+    var selectedCellCenter:CGPoint!
     var myCollecion: UICollectionView? = nil
-    
     var tapped: Bool  = false
-    
     
     init(titles: [String], type: navBarType) {
         super.init(frame: CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen().bounds), 44))
@@ -59,7 +56,7 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     //TODO: text width, padding whent 3 elements
     
     func collectionViewCreation(selectedItem itemIndexPath: NSIndexPath?, navType:navBarType)  {
@@ -69,7 +66,7 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
             let sizeOfText = giveMeSizeOfText(text, font: UIFont(name: "Helvetica", size: 13))
             self.wholeTextWidth  += sizeOfText.width
         }
-
+        
         let size = UIScreen.mainScreen().bounds.width - self.wholeTextWidth
         var padding : CGFloat = 40
         self.padding = padding
@@ -82,7 +79,7 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
                 self.padding = padding
             }
         }
-
+        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
         layout.sectionInset = UIEdgeInsets(top: 0, left: padding, bottom:0, right: padding)
@@ -100,10 +97,8 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
             collection.backgroundColor = UIColor.whiteColor()
         }
         
-//        collection.backgroundColor = UIColor.redColor()
+        //        collection.backgroundColor = UIColor.redColor()
         collection.contentSize = CGSizeMake(UIScreen.mainScreen().bounds.width, 30) //????
-        
-        
         collection.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         collection.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collection.alwaysBounceHorizontal = true
@@ -114,33 +109,30 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
         
         if compareWidth < UIScreen.mainScreen().bounds.width {
             
-             collection.scrollEnabled = false
+            collection.scrollEnabled = false
         } else {
             collection.scrollEnabled = true
         }
-       
+        
         self.addSubview(collection)
         
         
-        
         let triangleView = TriangleView(view: self, type: .ColorTypeGreen, multiplyWidth: self.titles!.count)
-//        let triangleView = TriangleView (
         self.triangleView = triangleView
         
         let myCollectionViewcell =  collection.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: itemIndexPath!)
         let itemCenter = myCollectionViewcell.center
         self.triangleView?.center = CGPointMake(itemCenter.x, (self.triangleView?.center.y)!)
-        
         self.deltaOfset = collection.contentOffset.x
     }
-
-//MARK: - UICollectionViewDataSource
+    
+    //MARK: - UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return (self.titles?.count)!
     }
-  
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
@@ -165,46 +157,40 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
         cell.contentView.addSubview(label)
         return cell
     }
-
-//MARK: UICollectionViewDelegateFlowLayout
-  
+    
+    //MARK: UICollectionViewDelegateFlowLayout
+    
     func collectionView(collectionView: UICollectionView,
-                          layout collectionViewLayout: UICollectionViewLayout,
-                                 sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                               sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-//        let text = titles![indexPath.row]
-//        lableProp = UILabel()
-//        lableProp?.text = text
+        //        let text = titles![indexPath.row]
+        //        lableProp = UILabel()
+        //        lableProp?.text = text
         
-    let size = giveMeSizeOfText(self.titles![(indexPath.row)], font: UIFont(name: "Helvetica", size: 13))
-
-    return  size //(lableProp?.intrinsicContentSize())!
+        let size = giveMeSizeOfText(self.titles![(indexPath.row)], font: UIFont(name: "Helvetica", size: 13))
+        
+        return  size //(lableProp?.intrinsicContentSize())!
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return self.padding
     }
     
-//MARK: UICollectionViewDelegate  
+    //MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        self.tapped = true 
+        self.tapped = true
         
-        let currentCollectionViewcell =  collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
-        let currentCollectionViewCellCenter = currentCollectionViewcell.center
-        print("itemCenter = \(currentCollectionViewCellCenter)")
+        let tappedCollectionViewcell =  collectionView.cellForItemAtIndexPath(indexPath)
+        let tappedCollectionViewCellCenter = tappedCollectionViewcell!.center
+        let pointOnSelf = self.convertPoint(tappedCollectionViewCellCenter, fromView: tappedCollectionViewcell)
         
-        let pointOnSelf = self.convertPoint(currentCollectionViewCellCenter, fromView: currentCollectionViewcell)
-        print("pointOnSelf = \(pointOnSelf)")
-
-        UIView.animateWithDuration(0.3, animations: { 
-            
-            self.triangleView?.center = CGPointMake(currentCollectionViewCellCenter.x - self.lastContentOffset, (self.triangleView?.center.y)!)
-
-            }) { (true) in
-                
-                self.tapped = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.triangleView?.center = CGPointMake(tappedCollectionViewCellCenter.x - self.lastContentOffset, (self.triangleView?.center.y)!)
+        }) { (true) in
+            self.tapped = false
         }
         self.delegate?.itemOnSubNavigationBarSelected(self, index: indexPath)
     }
@@ -218,12 +204,12 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
             scrollDirection = .ScrollDirectionRight;
             self.deltaOfset = scrollView.contentOffset.x - self.lastContentOffset
             self.triangleView?.center.x -= self.deltaOfset
-
+            
         }
         else if (self.lastContentOffset < scrollView.contentOffset.x) {
             scrollDirection = .ScrollDirectionLeft;
             self.deltaOfset = self.lastContentOffset - scrollView.contentOffset.x
-
+            
             self.triangleView?.center.x += self.deltaOfset
         }
         
@@ -244,18 +230,42 @@ class UnderNavBarView: UIView, UICollectionViewDelegate,
     }
     
     
-    func moveTrinagleTo(index: NSIndexPath) {
+    
+    func indexPathForLastCell() -> NSIndexPath {
         
-        print("center = \(self.triangleView?.center)")
-        let currentCollectionViewcell =  self.myCollecion!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: index)
-        let currentCollectionViewCellCenter = currentCollectionViewcell.center
+        return NSIndexPath(forRow: self.titles!.count - 1, inSection: 0)
+    }
+    
+ 
+    func moveTo(index: Int, percent: CGFloat) {
         
-      
-        UIView.animateWithDuration(0.3, delay: 0, options: .BeginFromCurrentState, animations: {
-            self.triangleView?.center = CGPointMake(currentCollectionViewCellCenter.x, (self.triangleView?.center.y)!)
-            print("center = \(self.triangleView?.center)")
+        let path = NSIndexPath(forItem: index, inSection: 0)
+        
+        self.myCollecion?.scrollToItemAtIndexPath(path, atScrollPosition: .CenteredHorizontally, animated: true)
+        
+        if self.tapped == false {
             
-        }) { (true) in
+            let itemsCount = self.myCollecion!.numberOfItemsInSection(0)
+            
+            if index >= 0 && index < itemsCount {
+                var indexPath = NSIndexPath(forItem: index, inSection: 0)
+                let currentCell = self.myCollecion!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+                let currentCellCenterX = currentCell.center.x - self.lastContentOffset
+                
+                var nextCellCenterX : CGFloat = 0.0
+                if index + 1 != itemsCount {
+                    indexPath = NSIndexPath(forItem: index + 1, inSection: 0)
+                    let nextCell = self.myCollecion!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+                    nextCellCenterX = nextCell.center.x  - self.lastContentOffset
+                } else {
+                    nextCellCenterX = self.myCollecion!.bounds.width
+                }
+                
+                let difference = (nextCellCenterX - currentCellCenterX) * percent
+                
+                let centerY = self.triangleView!.center.y
+                self.triangleView?.center = CGPointMake(currentCellCenterX + difference, centerY)
+            }
             
         }
     }

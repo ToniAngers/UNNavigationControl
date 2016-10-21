@@ -20,23 +20,23 @@ class TriangleView: UIView {
     
     var color:ColorType? = nil
     
-
-    init(view: UIView, type: ColorType, multiplyWidth: Int) {
     
+    init(view: UIView, type: ColorType, multiplyWidth: Int) {
+        
         super.init(frame: CGRectMake(view.frame.origin.x - view.frame.width-10, 30, CGRectGetWidth(view.bounds)*CGFloat(multiplyWidth), 14))
-    self.backgroundColor = UIColor.clearColor()
-    self.trinagleSuperView = view
+        self.backgroundColor = UIColor.clearColor()
+        self.trinagleSuperView = view
         
         
         self.color = type
-
+        
         view.addSubview(self)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-   
+    
     override func drawRect(rect: CGRect) {
         
         let customViewHeight: CGFloat = 1
@@ -48,8 +48,8 @@ class TriangleView: UIView {
         if self.color == .ColorTypeWhite {
             plusPath.moveToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 0))
             plusPath.moveToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 14))
-
-//          plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 15))
+            
+            //          plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 15))
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2 + 10, 14))
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2, 5))
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2 - 10, 14))
@@ -59,7 +59,7 @@ class TriangleView: UIView {
             plusPath.stroke()
             
             
-         
+            
             self.layer.shadowColor = UIColor.lightGrayColor().CGColor
             self.layer.shadowOffset = CGSizeMake(0, 1);
             self.layer.shadowOpacity = 2;
@@ -86,5 +86,5 @@ class TriangleView: UIView {
         
         
     }
-
+    
 }

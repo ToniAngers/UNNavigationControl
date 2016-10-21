@@ -20,7 +20,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
      var controllersStack : [UIViewController]!
     
     
-     var indexOfCurrentVC: Int = 0
+     var indexOfSelectedVC: Int = 0
+     var indexOfPreviousVC: NSIndexPath!
     
 //MARK: LyfeCycle
     
@@ -69,14 +70,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.scrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(self.titles.count), V1.view.frame.height)
         
-        
-        
     }
+    
+    
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        tableViewCreation()
+//        tableViewCreation()
         self.view.bringSubviewToFront(self.underView!)
         
     }
@@ -120,23 +123,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
        
-        if self.underView.tapped == false { //check if cell in collection tapped - moveTriangleTo() doesnt call.
-            
+        if self.underView.tapped == false
+        { //check if cell in collection tapped - moveTriangleTo() doesnt call.
             if scrollView.contentOffset.x > 0 {
-                let index = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-                self.indexOfCurrentVC = index
+//                let index = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+//                self.indexOfSelectedVC = index
+//                
+//                let indexPathForSelectedVC = NSIndexPath(forItem: self.indexOfSelectedVC , inSection: 0)
+//                self.underView.moveTrinagleTo(indexPathForSelectedVC, scrollViewOffset: scrollView.contentOffset.x, percentOfMOving: 30) //TODO
                 
-                let indexPath = NSIndexPath(forItem: indexOfCurrentVC , inSection: 0)
-                self.underView.moveTrinagleTo(indexPath)
+                let scrollIndex = Int(round(scrollView.contentOffset.x / scrollView.frame.size.width))
+                self.underView.triangleView?.center.x = (scrollView.contentOffset.x / CGFloat(self.titles.count + 1))
+                
+
             }
         }
-        print(scrollView.contentOffset)
         
     }
-    
-    
-    
-    
     
     
  //MARK: Help functions

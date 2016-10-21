@@ -10,7 +10,10 @@
 		A700662C1DAE4A2F00DA0529 /* Controller1.swift in Sources */ = {isa = PBXBuildFile; fileRef = A700662B1DAE4A2F00DA0529 /* Controller1.swift */; };
 		A700662E1DAE4A4000DA0529 /* Controller2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A700662D1DAE4A4000DA0529 /* Controller2.swift */; };
 		A70066301DAE527400DA0529 /* Controller3.swift in Sources */ = {isa = PBXBuildFile; fileRef = A700662F1DAE527400DA0529 /* Controller3.swift */; };
-		A70657F51DA3A6EF00F67932 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70657F41DA3A6EF00F67932 /* RankingViewController.swift */; };
+		A70747781DBA11E200611D85 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70747771DBA11E200611D85 /* CollectionViewController.swift */; };
+		A707477A1DBA45D400611D85 /* Controller4.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70747791DBA45D400611D85 /* Controller4.swift */; };
+		A707477C1DBA45DE00611D85 /* Controller5.swift in Sources */ = {isa = PBXBuildFile; fileRef = A707477B1DBA45DE00611D85 /* Controller5.swift */; };
+		A707477E1DBA45E800611D85 /* Controller6.swift in Sources */ = {isa = PBXBuildFile; fileRef = A707477D1DBA45E800611D85 /* Controller6.swift */; };
 		A72237511D9EB4E100CA5CF3 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72237501D9EB4E100CA5CF3 /* TriangleView.swift */; };
 		A77A32931D9BE16400ACCE4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77A32921D9BE16400ACCE4C /* AppDelegate.swift */; };
 		A77A32951D9BE16400ACCE4C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77A32941D9BE16400ACCE4C /* ViewController.swift */; };
@@ -24,7 +27,10 @@
 		A700662B1DAE4A2F00DA0529 /* Controller1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller1.swift; sourceTree = "<group>"; };
 		A700662D1DAE4A4000DA0529 /* Controller2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller2.swift; sourceTree = "<group>"; };
 		A700662F1DAE527400DA0529 /* Controller3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller3.swift; sourceTree = "<group>"; };
-		A70657F41DA3A6EF00F67932 /* RankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
+		A70747771DBA11E200611D85 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionViewController.swift; path = ../CollectionViewController.swift; sourceTree = "<group>"; };
+		A70747791DBA45D400611D85 /* Controller4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller4.swift; sourceTree = "<group>"; };
+		A707477B1DBA45DE00611D85 /* Controller5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller5.swift; sourceTree = "<group>"; };
+		A707477D1DBA45E800611D85 /* Controller6.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller6.swift; sourceTree = "<group>"; };
 		A72237501D9EB4E100CA5CF3 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		A77A328F1D9BE16400ACCE4C /* UnderNavBarView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnderNavBarView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77A32921D9BE16400ACCE4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,11 +73,14 @@
 			isa = PBXGroup;
 			children = (
 				A77A32921D9BE16400ACCE4C /* AppDelegate.swift */,
+				A70747771DBA11E200611D85 /* CollectionViewController.swift */,
 				A77A32941D9BE16400ACCE4C /* ViewController.swift */,
 				A700662B1DAE4A2F00DA0529 /* Controller1.swift */,
 				A700662D1DAE4A4000DA0529 /* Controller2.swift */,
 				A700662F1DAE527400DA0529 /* Controller3.swift */,
-				A70657F41DA3A6EF00F67932 /* RankingViewController.swift */,
+				A70747791DBA45D400611D85 /* Controller4.swift */,
+				A707477B1DBA45DE00611D85 /* Controller5.swift */,
+				A707477D1DBA45E800611D85 /* Controller6.swift */,
 				A77A32A41D9BE17C00ACCE4C /* UnderNavBarView.swift */,
 				A72237501D9EB4E100CA5CF3 /* TriangleView.swift */,
 				A77A32961D9BE16400ACCE4C /* Main.storyboard */,
@@ -155,9 +164,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A70657F51DA3A6EF00F67932 /* RankingViewController.swift in Sources */,
+				A70747781DBA11E200611D85 /* CollectionViewController.swift in Sources */,
 				A72237511D9EB4E100CA5CF3 /* TriangleView.swift in Sources */,
 				A77A32951D9BE16400ACCE4C /* ViewController.swift in Sources */,
+				A707477C1DBA45DE00611D85 /* Controller5.swift in Sources */,
+				A707477A1DBA45D400611D85 /* Controller4.swift in Sources */,
+				A707477E1DBA45E800611D85 /* Controller6.swift in Sources */,
 				A70066301DAE527400DA0529 /* Controller3.swift in Sources */,
 				A700662C1DAE4A2F00DA0529 /* Controller1.swift in Sources */,
 				A700662E1DAE4A4000DA0529 /* Controller2.swift in Sources */,
