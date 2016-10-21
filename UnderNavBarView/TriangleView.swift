@@ -29,6 +29,7 @@ class TriangleView: UIView {
         
         
         self.color = type
+        self.color = ColorType.ColorTypeWhite
         
         view.addSubview(self)
     }
@@ -46,18 +47,30 @@ class TriangleView: UIView {
         plusPath.lineWidth = customViewHeight
         
         if self.color == .ColorTypeWhite {
-            plusPath.moveToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 0))
-            plusPath.moveToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 14))
+//            plusPath.moveToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 0))
+//            plusPath.moveToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 14))
+//            
+//            //          plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 15))
+//            plusPath.addLineToPoint(CGPointMake(self.frame.width/2 + 10, 14))
+//            plusPath.addLineToPoint(CGPointMake(self.frame.width/2, 5))
+//            plusPath.addLineToPoint(CGPointMake(self.frame.width/2 - 10, 14))
+//            plusPath.addLineToPoint(CGPointMake(0, 14))
+//            plusPath.addLineToPoint(CGPointMake(0, 0))
+//            UIColor.whiteColor().setFill()
+//            plusPath.fill()
+//            UIColor.lightGrayColor().setStroke()
+//            plusPath.stroke()
             
-            //          plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 15))
+            plusPath.moveToPoint(CGPointMake(0, 0))
+            plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 0))
+            plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 14))
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2 + 10, 14))
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2, 5))
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2 - 10, 14))
             plusPath.addLineToPoint(CGPointMake(0, 14))
             plusPath.addLineToPoint(CGPointMake(0, 0))
-            UIColor.lightGrayColor().setStroke()
-            plusPath.stroke()
-            
+            UIColor.whiteColor().setFill()
+            plusPath.fill()
             
             
             self.layer.shadowColor = UIColor.lightGrayColor().CGColor

@@ -11,26 +11,15 @@ import UIKit
 
 class CollectionViewController: UIViewController, UnderNavBarViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    
     var titles:[String] = Array()
     var underView: UnderNavBarView!
     var triangleView:UIView? = nil
     var collection: UICollectionView!
     
-    var indexPathNextCell:NSIndexPath!
-    
-    var controllersStack : [UIViewController]!
-    
-    var customOffset: NSInteger = 0
-    
-    var deltaOfset:CGFloat = 0
-    var lastContentOffset: CGFloat = 0
-    
-    
-    enum ScrollDirection {
-        case ScrollDirectionRight
-        case ScrollDirectionLeft
-    }
+    var controllersStack : [UIViewController]! //Content Controllers
+
+//    var deltaOfset:CGFloat = 0
+//    var lastContentOffset: CGFloat = 0
     
     
     override func viewDidLoad() {
@@ -78,8 +67,7 @@ class CollectionViewController: UIViewController, UnderNavBarViewDelegate, UICol
         let VC4 = Controller4()
         let VC5 = Controller5()
         let VC6 = Controller6()
-        
-        
+    
         self.controllersStack = [VC1, VC2, VC3, VC4, VC5, VC6]
     }
     
@@ -104,18 +92,14 @@ class CollectionViewController: UIViewController, UnderNavBarViewDelegate, UICol
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        
-        
-    }
-    
+ 
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         let offsetX = scrollView.contentOffset.x
         let width = scrollView.bounds.width
         let page = Int(offsetX/width)
         let percent = (offsetX / width) - CGFloat(page)
-        self.underView.moveTo(page, percent: percent)
+        self.underView.moveTo(page, percent: percent) // Calculation Offset in Percent
         
     }
     
@@ -126,12 +110,13 @@ class CollectionViewController: UIViewController, UnderNavBarViewDelegate, UICol
     
     //MARK: UnderNavBarDelegate
     
-    func itemOnSubNavigationBarSelected(sender: UnderNavBarView, index: NSIndexPath) {
+    func itemOnSubNavigationBarSelected(sender: UnderNavBarView, index: NSIndexPath) { //delegate method for click on UnderNavBarView
         
         showControllerAtIndex(index.row)
     }
     
     func showControllerAtIndex(selectedIndex: Int)  {
+
         let path = NSIndexPath(forItem: selectedIndex, inSection: 0)
         self.collection.scrollToItemAtIndexPath(path, atScrollPosition: .CenteredHorizontally, animated: true)
     }

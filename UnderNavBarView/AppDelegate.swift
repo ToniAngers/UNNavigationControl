@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let nav = UINavigationController()
-//        let mainView = ViewController()
         let mainView = CollectionViewController()
         nav.viewControllers = [mainView]
         self.window!.rootViewController = nav

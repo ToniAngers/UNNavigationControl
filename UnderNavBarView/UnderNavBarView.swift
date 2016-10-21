@@ -36,17 +36,17 @@ UIScrollViewDelegate   {
     var lastContentOffset: CGFloat = 0
     var wholeTextWidth: CGFloat = 0
     var padding: CGFloat = 0
-    var selectedCellCenter:CGPoint!
+//    var selectedCellCenter:CGPoint!
     var myCollecion: UICollectionView? = nil
     var tapped: Bool  = false
     
     init(titles: [String], type: navBarType) {
+        
         super.init(frame: CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen().bounds), 44))
         self.navBarColorType = type
         self.titles = titles
         
         self.backgroundColor = UIColor.clearColor()
-        
         let index = NSIndexPath(forItem: 0, inSection: 0)
         
         collectionViewCreation(selectedItem: index, navType:type)
@@ -57,16 +57,15 @@ UIScrollViewDelegate   {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //TODO: text width, padding whent 3 elements
+
+    //TODO: Change font
     
     func collectionViewCreation(selectedItem itemIndexPath: NSIndexPath?, navType:navBarType)  {
         
         for text in self.titles! {
-            
             let sizeOfText = giveMeSizeOfText(text, font: UIFont(name: "Helvetica", size: 13))
             self.wholeTextWidth  += sizeOfText.width
         }
-        
         let size = UIScreen.mainScreen().bounds.width - self.wholeTextWidth
         var padding : CGFloat = 40
         self.padding = padding
@@ -97,7 +96,6 @@ UIScrollViewDelegate   {
             collection.backgroundColor = UIColor.whiteColor()
         }
         
-        //        collection.backgroundColor = UIColor.redColor()
         collection.contentSize = CGSizeMake(UIScreen.mainScreen().bounds.width, 30) //????
         collection.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         collection.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
@@ -108,14 +106,12 @@ UIScrollViewDelegate   {
         let compareWidth = self.wholeTextWidth + (self.padding * (CGFloat(self.titles!.count)+1))
         
         if compareWidth < UIScreen.mainScreen().bounds.width {
-            
             collection.scrollEnabled = false
         } else {
             collection.scrollEnabled = true
         }
         
         self.addSubview(collection)
-        
         
         let triangleView = TriangleView(view: self, type: .ColorTypeGreen, multiplyWidth: self.titles!.count)
         self.triangleView = triangleView
@@ -185,7 +181,7 @@ UIScrollViewDelegate   {
         
         let tappedCollectionViewcell =  collectionView.cellForItemAtIndexPath(indexPath)
         let tappedCollectionViewCellCenter = tappedCollectionViewcell!.center
-        let pointOnSelf = self.convertPoint(tappedCollectionViewCellCenter, fromView: tappedCollectionViewcell)
+//        let pointOnSelf = self.convertPoint(tappedCollectionViewCellCenter, fromView: tappedCollectionViewcell)
         
         UIView.animateWithDuration(0.3, animations: {
             self.triangleView?.center = CGPointMake(tappedCollectionViewCellCenter.x - self.lastContentOffset, (self.triangleView?.center.y)!)
@@ -216,7 +212,14 @@ UIScrollViewDelegate   {
         self.lastContentOffset = scrollView.contentOffset.x;
     }
     
-    func giveMeSizeOfText(string: String, font: UIFont!) -> CGSize {
+
+    func indexPathForLastCell() -> NSIndexPath {
+        
+        return NSIndexPath(forRow: self.titles!.count - 1, inSection: 0)
+    }
+    
+
+    func giveMeSizeOfText(string: String, font: UIFont!) -> CGSize { //Calculation text size for UILable
         
         var sizeOfString = CGSize()
         
@@ -229,14 +232,6 @@ UIScrollViewDelegate   {
         return sizeOfString
     }
     
-    
-    
-    func indexPathForLastCell() -> NSIndexPath {
-        
-        return NSIndexPath(forRow: self.titles!.count - 1, inSection: 0)
-    }
-    
- 
     func moveTo(index: Int, percent: CGFloat) {
         
         let path = NSIndexPath(forItem: index, inSection: 0)
