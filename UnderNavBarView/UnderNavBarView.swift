@@ -12,35 +12,38 @@ protocol UnderNavBarViewDelegate: class {
     func itemOnSubNavigationBarSelected(sender: UnderNavBarView, index: NSIndexPath)
 }
 
-
-class UnderNavBarView: UIView, UICollectionViewDelegate,
-    UICollectionViewDataSource,
-    UICollectionViewDelegateFlowLayout,
-UIScrollViewDelegate   {
+class UnderNavBarView: UIView, UICollectionViewDelegate, UICollectionViewDataSource,
+                                UICollectionViewDelegateFlowLayout, UIScrollViewDelegate   {
     
-    enum navBarType {
-        case navBarTypeGreen
-        case navBarTypeWhite
+//    enum navBarType {
+//        case navBarTypeGreen
+//        case navBarTypeWhite
+//    }
+    
+    enum EFLColorType {
+        case Black
+        case White
+        case Green
     }
+
     
     enum ScrollDirection {
         case ScrollDirectionRight
         case ScrollDirectionLeft
     }
     
-    weak var delegate:UnderNavBarViewDelegate? //collectionView Item pressed
+    weak var delegate:UnderNavBarViewDelegate? //collectionView Item pressed (under NavBar)
     var titles:[String]?
     var triangleView: TriangleView? = nil
-    var navBarColorType:navBarType? = nil
+    var navBarColorType:EFLColorType? = nil
     var deltaOfset:CGFloat = 0
     var lastContentOffset: CGFloat = 0
     var wholeTextWidth: CGFloat = 0
     var padding: CGFloat = 0
-//    var selectedCellCenter:CGPoint!
     var myCollecion: UICollectionView? = nil
-    var tapped: Bool  = false
+    var tapped: Bool  = false  //checkingm if user tapped on underNavBar at first, then
     
-    init(titles: [String], type: navBarType) {
+    init(titles: [String], type: EFLColorType) {
         
         super.init(frame: CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen().bounds), 44))
         self.navBarColorType = type
@@ -60,7 +63,7 @@ UIScrollViewDelegate   {
 
     //TODO: Change font
     
-    func collectionViewCreation(selectedItem itemIndexPath: NSIndexPath?, navType:navBarType)  {
+    func collectionViewCreation(selectedItem itemIndexPath: NSIndexPath?, navType:EFLColorType)  {
         
         for text in self.titles! {
             let sizeOfText = giveMeSizeOfText(text, font: UIFont(name: "Helvetica", size: 13))
@@ -90,7 +93,7 @@ UIScrollViewDelegate   {
         collection.dataSource = self
         self.myCollecion = collection
         
-        if navType == navBarType.navBarTypeGreen {
+        if navType == EFLColorType.Green {
             collection.backgroundColor = UIColor(red: 0/255, green: 183/255, blue: 30/255, alpha: 1.0) /* #00b71e */
         } else {
             collection.backgroundColor = UIColor.whiteColor()
@@ -113,7 +116,16 @@ UIScrollViewDelegate   {
         
         self.addSubview(collection)
         
-        let triangleView = TriangleView(view: self, type: .ColorTypeGreen, multiplyWidth: self.titles!.count)
+        
+        let triangleView = TriangleView(view: self, type: .ColorTypeWhite, multiplyWidth: self.titles!.count)
+
+        if navType == .Green {
+            
+            triangleView.color = .ColorTypeGreen
+        }else {
+            triangleView.color = .ColorTypeWhite
+        }
+        
         self.triangleView = triangleView
         
         let myCollectionViewcell =  collection.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: itemIndexPath!)
@@ -142,11 +154,10 @@ UIScrollViewDelegate   {
         label.text = titles![indexPath.row]
         label.font = UIFont(name: "Helvetica", size: 13)
         
-        if navBarColorType == .navBarTypeWhite {
-            label.textColor = UIColor.lightGrayColor()
-        } else {
-            
+        if navBarColorType == .Green {
             label.textColor = UIColor.whiteColor()
+        } else {
+            label.textColor = UIColor.grayColor()
         }
         
         label.sizeToFit()
@@ -155,18 +166,15 @@ UIScrollViewDelegate   {
     }
     
     //MARK: UICollectionViewDelegateFlowLayout
+    //TODO: Change font name
     
     func collectionView(collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                                sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        //        let text = titles![indexPath.row]
-        //        lableProp = UILabel()
-        //        lableProp?.text = text
-        
         let size = giveMeSizeOfText(self.titles![(indexPath.row)], font: UIFont(name: "Helvetica", size: 13))
         
-        return  size //(lableProp?.intrinsicContentSize())!
+        return  size
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
@@ -181,7 +189,20 @@ UIScrollViewDelegate   {
         
         let tappedCollectionViewcell =  collectionView.cellForItemAtIndexPath(indexPath)
         let tappedCollectionViewCellCenter = tappedCollectionViewcell!.center
-//        let pointOnSelf = self.convertPoint(tappedCollectionViewCellCenter, fromView: tappedCollectionViewcell)
+        
+        
+        let array = tappedCollectionViewcell?.contentView.subviews
+        
+        for item in array! {
+            if item.isKindOfClass(UILabel) {
+                let lable = item as! UILabel
+                var size =  lable.font.pointSize
+                size += 1
+                lable.font = UIFont(name: "Helvetica-Bold", size: size)
+                lable.sizeToFit()
+            }
+        }
+        
         
         UIView.animateWithDuration(0.3, animations: {
             self.triangleView?.center = CGPointMake(tappedCollectionViewCellCenter.x - self.lastContentOffset, (self.triangleView?.center.y)!)
@@ -190,6 +211,25 @@ UIScrollViewDelegate   {
         }
         self.delegate?.itemOnSubNavigationBarSelected(self, index: indexPath)
     }
+    
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let tappedCollectionViewcell =  collectionView.cellForItemAtIndexPath(indexPath)
+        let array = tappedCollectionViewcell?.contentView.subviews
+        
+        for item in array! {
+            if item.isKindOfClass(UILabel) {
+                let lable = item as! UILabel
+                var size =  lable.font.pointSize
+                size -= 1
+                lable.font = UIFont(name: "Helvetica", size: size)
+                lable.textColor = UIColor.whiteColor()
+            }
+        }
+
+    }
+    
     
     //MARK: UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {

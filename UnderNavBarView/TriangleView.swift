@@ -29,7 +29,6 @@ class TriangleView: UIView {
         
         
         self.color = type
-        self.color = ColorType.ColorTypeWhite
         
         view.addSubview(self)
     }
@@ -47,51 +46,37 @@ class TriangleView: UIView {
         plusPath.lineWidth = customViewHeight
         
         if self.color == .ColorTypeWhite {
-//            plusPath.moveToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 0))
-//            plusPath.moveToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 14))
-//            
-//            //          plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 15))
-//            plusPath.addLineToPoint(CGPointMake(self.frame.width/2 + 10, 14))
-//            plusPath.addLineToPoint(CGPointMake(self.frame.width/2, 5))
-//            plusPath.addLineToPoint(CGPointMake(self.frame.width/2 - 10, 14))
-//            plusPath.addLineToPoint(CGPointMake(0, 14))
-//            plusPath.addLineToPoint(CGPointMake(0, 0))
-//            UIColor.whiteColor().setFill()
-//            plusPath.fill()
-//            UIColor.lightGrayColor().setStroke()
-//            plusPath.stroke()
             
-            plusPath.moveToPoint(CGPointMake(0, 0))
+            plusPath.moveToPoint(CGPointMake(0, 0)) // Path creation
             plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 0))
             plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 14))
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2 + 10, 14))
-            plusPath.addLineToPoint(CGPointMake(self.frame.width/2, 5))
+            plusPath.addLineToPoint(CGPointMake(self.frame.width/2, 5))            //top of triangle
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2 - 10, 14))
             plusPath.addLineToPoint(CGPointMake(0, 14))
             plusPath.addLineToPoint(CGPointMake(0, 0))
             UIColor.whiteColor().setFill()
             plusPath.fill()
             
-            
-            self.layer.shadowColor = UIColor.lightGrayColor().CGColor
+            self.layer.shadowColor = UIColor.lightGrayColor().CGColor //Shadow
             self.layer.shadowOffset = CGSizeMake(0, 1);
             self.layer.shadowOpacity = 2;
             self.layer.shadowRadius = 1.0;
             
         } else {
-            //create the path
-            plusPath.moveToPoint(CGPointMake(0, 0))
+            
+            plusPath.moveToPoint(CGPointMake(0, 0)) // Path creation
             plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 0))
             plusPath.addLineToPoint(CGPointMake(CGRectGetMaxX(self.bounds), 14))
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2 + 10, 14))
-            plusPath.addLineToPoint(CGPointMake(self.frame.width/2, 5))
+            plusPath.addLineToPoint(CGPointMake(self.frame.width/2, 5))           //top of triangle
             plusPath.addLineToPoint(CGPointMake(self.frame.width/2 - 10, 14))
             plusPath.addLineToPoint(CGPointMake(0, 14))
             plusPath.addLineToPoint(CGPointMake(0, 0))
             UIColor(red: 0/255, green: 183/255, blue: 30/255, alpha: 1.0).setFill()
             plusPath.fill()
             
-            self.layer.shadowColor = UIColor.lightGrayColor().CGColor
+            self.layer.shadowColor = UIColor.lightGrayColor().CGColor //Shadow
             self.layer.shadowOffset = CGSizeMake(0, 1);
             self.layer.shadowOpacity = 2;
             self.layer.shadowRadius = 1.0;

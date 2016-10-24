@@ -17,10 +17,6 @@ class CollectionViewController: UIViewController, UnderNavBarViewDelegate, UICol
     var collection: UICollectionView!
     
     var controllersStack : [UIViewController]! //Content Controllers
-
-//    var deltaOfset:CGFloat = 0
-//    var lastContentOffset: CGFloat = 0
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,18 +44,18 @@ class CollectionViewController: UIViewController, UnderNavBarViewDelegate, UICol
         self.view.addSubview(collectionView)
         
         self.titles = ["Challenges", "Ranking", "Something", "Challenges", "Ranking", "Something"]
-        let underView = UnderNavBarView(titles:self.titles, type: .navBarTypeGreen)
+        let underView = UnderNavBarView(titles:self.titles, type: .Green)
         underView.delegate = self
         self.triangleView = underView.triangleView!
         self.underView = underView
         self.view.addSubview(underView)
         
         
-        controllerCreation()
+        controllerCreation() //                                         REMOVE!!!!!
         
     }
     
-    func controllerCreation()  { // Content Creation
+    func controllerCreation()  { 
         
         let VC1 = Controller1()
         let VC2 = Controller2()
@@ -120,6 +116,8 @@ class CollectionViewController: UIViewController, UnderNavBarViewDelegate, UICol
         let path = NSIndexPath(forItem: selectedIndex, inSection: 0)
         self.collection.scrollToItemAtIndexPath(path, atScrollPosition: .CenteredHorizontally, animated: true)
     }
+    
+    
     
     
 }
